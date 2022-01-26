@@ -43,12 +43,12 @@ sqlcmd -S [tcp:<SQL_Server_Name>.database.windows.net | <Hostname>] -d <Database
 ```
 	
 Replace the following placeholders with the corresponding values:
-	- `<SQL_Server_Name>` Azure SQL Server Name if using Azure SQL instance.
-	- `<Hostname>` Hostname of SQL Server if using on-prem SQL Server instance.
-	- `<Database_Name>` name of the database you want to connect to.
-	- `<User_Name>` user name used to log in to the database, for instance: admin.
-    - `<Password>` user name password.
-    - `<Query_Here>` query to any table, for instance: "SELECT * FROM dbo.Person"
+- `<SQL_Server_Name>` Azure SQL Server Name if using Azure SQL instance.
+- `<Hostname>` Hostname of SQL Server if using on-prem SQL Server instance.
+- `<Database_Name>` name of the database you want to connect to.
+- `<User_Name>` user name used to log in to the database, for instance: admin.
+- `<Password>` user name password.
+- `<Query_Here>` query to any table, for instance: "SELECT * FROM dbo.Person"
 
 ## Result:
 ![image](https://user-images.githubusercontent.com/7483684/151251442-e6804c3b-8995-4271-944a-dd63d2452142.png)
