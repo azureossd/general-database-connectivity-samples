@@ -1,4 +1,4 @@
-# Test SQLCMD web app connecting to SQL Server
+# How to test connection to SQL Server with SQLCMD in Alpine (Java)
 
 ## 1. Install dependencies 
 
