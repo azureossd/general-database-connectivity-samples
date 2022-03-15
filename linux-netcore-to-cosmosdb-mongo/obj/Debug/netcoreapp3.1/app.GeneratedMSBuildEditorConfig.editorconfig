@@ -1,0 +1,3 @@
+is_global = true
+build_property.RootNamespace = app
+build_property.ProjectDir = c:\Users\juniorj\OneDrive - Microsoft\Documents\ELX Training\DotNET Core\labs\DBConnectivity_samples\general-database-connectivity-samples\linux-netcore-to-cosmosdb-mongo\

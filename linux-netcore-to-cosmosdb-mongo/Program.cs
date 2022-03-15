@@ -1,7 +1,9 @@
 	using System;
 	using System.Threading.Tasks;
 	using System.Collections.Generic;
+    using System.Security.Authentication;
 	using Microsoft.Azure.Cosmos;
+    using MongoDB.Driver;
 	
 	namespace app
 	{
@@ -28,28 +30,33 @@
 	
 	        private async Task QueryItemsAsync()
 	        {
-	            CosmosClient cosmosClient = new CosmosClient("https://<CosmosServerName>.documents.azure.com:443/", "<PrimaryKey>", new CosmosClientOptions() { ApplicationName = "CosmosDBDotnetQuickstart" });
-	            Database database = cosmosClient.GetDatabase("<DatabaseName>");
-	            Container container = database.GetContainer("<ContainerName>");
-	
-	            QueryDefinition queryDefinition = new QueryDefinition("SELECT r.id, r.name, r.age, r.gender FROM root r");
-	            FeedIterator<Employee> queryResultSetIterator = container.GetItemQueryIterator<Employee>(queryDefinition);
-	            List<Employee> families = new List<Employee>();
-	
-	            while (queryResultSetIterator.HasMoreResults)
-	            {
-	                FeedResponse<Employee> currentResultSet = await queryResultSetIterator.ReadNextAsync();
-	                foreach (Employee employee in currentResultSet)
-	                {
-	                    Console.WriteLine("=============================================");
-	                    Console.WriteLine("ID: " + employee.id);
-	                    Console.WriteLine("Name: " + employee.name);
-	                    Console.WriteLine("Age: " + employee.age);
-	                    Console.WriteLine("Gender: " + employee.gender);
-	                }
-	                Console.WriteLine("=============================================");
-	
-	            }
+                
+				// Get the connection string from Azure Cosmos DB API for MongoDB account > Connection String > PRIMARY CONNECTION STRING
+                string connectionString = @"mongodb://<PRIMARY_CONNECTION_STRING>";
+
+				// Pull up Azure Cosmos DB API for MongoDB account settings 
+                MongoClientSettings settings = MongoClientSettings.FromUrl(
+                                                    new MongoUrl(connectionString)
+                                                );
+				
+				// Set new SSL protocol settings using TLS 1.2
+                settings.SslSettings = new SslSettings() { EnabledSslProtocols = SslProtocols.Tls12 };
+
+				// Connect to Azure Cosmos DB API for MongoDB account
+                var mongoClient = new MongoClient(settings);
+
+				// Get the Mongo Database
+                var  database = mongoClient.GetDatabase("Employee");
+
+				// Get the Database book collection and map it into a model
+                var collection = database.GetCollection<Employee>("Employee");
+
+				// Find all books/documents and put them in a list
+				var books = await collection.Find(_ => true).ToListAsync();
+
+				// For each book prints its properties (i.e. id and name)
+				books.ForEach(employee => Console.WriteLine(employee.id + " " + employee.name));
+
 	        }
 	    }
 	}
