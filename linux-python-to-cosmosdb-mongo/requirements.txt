@@ -1,6 +1,6 @@
 azure-core==1.41.0
 azure-cosmos==4.17.1
-certifi==2026.10.18
+certifi==2026.10.19
 chardet==7.7.0
 idna==3.20
 requests==2.34.2
